@@ -23,7 +23,7 @@
 #ifndef SNAP_UDP_CLIENT_SERVER_CPP
 #define SNAP_UDP_CLIENT_SERVER_CPP
 
-#include <udp_client_server.h>
+#include <udp_client_server/udp_client_server.h>
 #include <string.h>
 #include <unistd.h>
 
