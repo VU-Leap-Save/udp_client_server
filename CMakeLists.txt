@@ -7,33 +7,6 @@ endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
-find_package(ament_cmake_ros REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
-
-add_library(udp_client_server src/udp_client_server.cpp)
-# add_library(udp_client_server::udp_client_server ALIAS udp_client_server)
-target_compile_features(udp_client_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
-target_include_directories(udp_client_server PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-
-# Causes the visibility macros to use dllexport rather than dllimport,
-# which is appropriate when building the dll but not consuming it.
-target_compile_definitions(udp_client_server PRIVATE "UDP_CLIENT_SERVER_BUILDING_LIBRARY")
-
-install(
-  DIRECTORY include/
-  DESTINATION include
-)
-install(
-  TARGETS udp_client_server
-  EXPORT export_${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -47,15 +20,23 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-ament_export_include_directories(
-  include
-)
+include_directories(include)
 
-ament_export_libraries(
-  udp_client_server
+add_library(udp_client_server src/udp_client_server.cpp)
+
+ament_export_targets(udp_client_server HAS_LIBRARY_TARGET) 
+
+install(
+  DIRECTORY include/udp_client_server
+  DESTINATION include
 )
-ament_export_targets(
-  export_${PROJECT_NAME}
+install(
+  TARGETS udp_client_server
+  EXPORT udp_client_server
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include
 )
 
 ament_package()
