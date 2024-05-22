@@ -60,7 +60,7 @@ namespace udp_client_server
  * \param[in] addr  The address to convert to a numeric IP.
  * \param[in] port  The port number.
  */
-UdpClient::UdpClient(const std::string& addr, int port)
+UdpClient::UdpClient(const std::string& addr, int port, bool blocking = false)
     : f_port_(port)
     , f_addr_(addr)
 {
@@ -77,7 +77,7 @@ UdpClient::UdpClient(const std::string& addr, int port)
     {
         throw UdpClientServerRuntimeError(("invalid address or port: \"" + addr + ":" + decimal_port + "\"").c_str());
     }
-    f_socket_ = socket(f_addrinfo_->ai_family, SOCK_DGRAM | SOCK_CLOEXEC | SOCK_NONBLOCK, IPPROTO_UDP);
+    f_socket_ = socket(f_addrinfo_->ai_family, SOCK_DGRAM | SOCK_CLOEXEC | (blocking ? 0x00: SOCK_NONBLOCK), IPPROTO_UDP);
     if(f_socket_ == -1)
     {
         freeaddrinfo(f_addrinfo_);
@@ -193,7 +193,7 @@ int UdpClient::send(const char *msg, size_t size)
  * \param[in] addr  The address we receive on.
  * \param[in] port  The port we receive from.
  */
-UdpServer::UdpServer(const std::string& addr, int port)
+UdpServer::UdpServer(const std::string& addr, int port, bool blocking = false)
     : f_port_(port)
     , f_addr_(addr)
 {
@@ -210,7 +210,7 @@ UdpServer::UdpServer(const std::string& addr, int port)
     {
         throw UdpClientServerRuntimeError(("invalid address or port for UDP socket: \"" + addr + ":" + decimal_port + "\"").c_str());
     }
-    f_socket_ = socket(f_addrinfo_->ai_family, SOCK_DGRAM | SOCK_CLOEXEC | SOCK_NONBLOCK, IPPROTO_UDP);
+    f_socket_ = socket(f_addrinfo_->ai_family, SOCK_DGRAM | SOCK_CLOEXEC | (blocking? 0x00 : SOCK_NONBLOCK), IPPROTO_UDP);
     if(f_socket_ == -1)
     {
         freeaddrinfo(f_addrinfo_);

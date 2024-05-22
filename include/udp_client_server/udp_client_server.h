@@ -39,7 +39,7 @@ public:
 class UdpClient
 {
 public:
-                        UdpClient(const std::string& addr, int port);
+                        UdpClient(const std::string& addr, int port, bool blocking);
                         ~UdpClient();
 
     int                 getSocket() const;
@@ -59,7 +59,7 @@ private:
 class UdpServer
 {
 public:
-                        UdpServer(const std::string& addr, int port);
+                        UdpServer(const std::string& addr, int port, bool blocking);
                         ~UdpServer();
 
     int                 getSocket() const;
