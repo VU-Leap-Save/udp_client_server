@@ -19,6 +19,8 @@
 // Reformated variable/method names to match the vanderbot_control style guide. 
 // Make all UDP sockets non-blocking
 // Andrew Orekhov, ARMA Lab, 2021
+//
+// Modified: Joshua Holden Turner, 2024
 
 #ifndef SNAP_UDP_CLIENT_SERVER_CPP
 #define SNAP_UDP_CLIENT_SERVER_CPP
@@ -57,8 +59,9 @@ namespace udp_client_server
  * resolved, the port is incompatible or not available, or the socket could
  * not be created.
  *
- * \param[in] addr  The address to convert to a numeric IP.
- * \param[in] port  The port number.
+ * \param[in] addr      The address to convert to a numeric IP.
+ * \param[in] port      The port number.
+ * \param[in] blocking  Whether or not the socket is blocking
  */
 UdpClient::UdpClient(const std::string& addr, int port, bool blocking = false)
     : f_port_(port)
@@ -190,8 +193,11 @@ int UdpClient::send(const char *msg, size_t size)
  * and port combinaison cannot be resolved or if the socket cannot be
  * opened.
  *
- * \param[in] addr  The address we receive on.
- * \param[in] port  The port we receive from.
+ * \param[in] addr      The address we receive on.
+ * \param[in] port      The port we receive from.
+ * \param[in] blocking  Whether or not the socket is blocking, defaults 
+ *      to false, if true, then the UdpServer::recv(...) command will not 
+ *      return until the specified number of bytes has been read.
  */
 UdpServer::UdpServer(const std::string& addr, int port, bool blocking = false)
     : f_port_(port)
