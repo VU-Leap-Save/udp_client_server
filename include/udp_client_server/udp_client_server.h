@@ -41,7 +41,7 @@ public:
 class UdpClient
 {
 public:
-                        UdpClient(const std::string& addr, int port, bool blocking);
+                        UdpClient(const std::string& addr, int port, bool blocking = false);
                         ~UdpClient();
 
     int                 getSocket() const;
@@ -61,7 +61,7 @@ private:
 class UdpServer
 {
 public:
-                        UdpServer(const std::string& addr, int port, bool blocking);
+                        UdpServer(const std::string& addr, int port, bool blocking = false);
                         ~UdpServer();
 
     int                 getSocket() const;

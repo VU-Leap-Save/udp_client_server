@@ -63,7 +63,7 @@ namespace udp_client_server
  * \param[in] port      The port number.
  * \param[in] blocking  Whether or not the socket is blocking
  */
-UdpClient::UdpClient(const std::string& addr, int port, bool blocking = false)
+UdpClient::UdpClient(const std::string& addr, int port, bool blocking)
     : f_port_(port)
     , f_addr_(addr)
 {
@@ -199,7 +199,7 @@ int UdpClient::send(const char *msg, size_t size)
  *      to false, if true, then the UdpServer::recv(...) command will not 
  *      return until the specified number of bytes has been read.
  */
-UdpServer::UdpServer(const std::string& addr, int port, bool blocking = false)
+UdpServer::UdpServer(const std::string& addr, int port, bool blocking)
     : f_port_(port)
     , f_addr_(addr)
 {
