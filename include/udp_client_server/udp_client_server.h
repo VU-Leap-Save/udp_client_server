@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, write to the Free Software
 // Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+// 
+// Modified: Joshua Holden Turner, 2024
 
 #ifndef SNAP_UDP_CLIENT_SERVER_H
 #define SNAP_UDP_CLIENT_SERVER_H
@@ -39,7 +41,7 @@ public:
 class UdpClient
 {
 public:
-                        UdpClient(const std::string& addr, int port);
+                        UdpClient(const std::string& addr, int port, bool blocking = false);
                         ~UdpClient();
 
     int                 getSocket() const;
@@ -59,7 +61,7 @@ private:
 class UdpServer
 {
 public:
-                        UdpServer(const std::string& addr, int port);
+                        UdpServer(const std::string& addr, int port, bool blocking = false);
                         ~UdpServer();
 
     int                 getSocket() const;
